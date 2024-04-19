@@ -1,0 +1,57 @@
+name: 'Docker CGO Actions'
+description: 'Build golang program with CGO_ENABLED=1 for docker Image'
+inputs:
+  platforms:  # id of input
+    description: 'The platforms to build for'
+    required: false
+    default: 'linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/riscv64,linux/s390x'
+  dir:
+    description: 'The directory to work'
+    required: false
+    default: '.'
+  packages:
+    description: 'The packages to build'
+    required: false
+    default: '.'
+  flags:
+    description: 'The flags to pass to the go build command'
+    required: false
+    default: '-ldflags=-w -s'
+  # out-dir:
+  #   description: 'The output directory'
+  #   required: false
+  #   default: 'bin'
+  output:
+    description: 'The output binary name'
+    required: false
+    default: '$repo'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Map platforms to targets
+      id: platform2targets
+      run: platform2targets.sh
+      shell: bash
+      env:
+        PLATFORMS: ${{ inputs.platforms }}
+
+    - name: Build go program
+      id: build
+      uses: go-cross/cgo-actions@v1
+      with:
+        dir: ${{ inputs.dir }}
+        packages: ${{ inputs.packages }}
+        flags: ${{ inputs.flags }}
+        out-dir: temp-bin
+        output: 'temp$target'
+        targets: ${{ steps.platform2targets.outputs.targets }}
+
+    - name: Rename files
+      id: rename
+      run: mv-files.sh
+      shell: bash
+      env:
+        OUTPUT: ${{ inputs.output }}
+        REPOSITORY: ${{ github.repository }}
+
