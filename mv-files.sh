@@ -19,25 +19,24 @@ output="${string//\$repo/$repo}"
 echo "output=$output"
 echo "output=$output" >> "$GITHUB_OUTPUT"
 
-# 遍历 bin 目录
+# Traverse the bin directory
 for file in temp-bin/temp*; do
-  # 获取文件名
+  # Get filename
   filename=$(basename "$file")
 
-  # 获取文件的键
+  # Get key from filename
   key="${filename#temp}"
 
-  # 如果字典中存在对应的值
+  # if the key exists in the mappings
   if [ -n "${mappings[$key]}" ]; then
-    # 目标目录为键对应的值
     target_dir="bin/${mappings[$key]}"
 
-    # 如果目标目录不存在，则创建
+    # if the target directory does not exist, create it
     if [ ! -d "$target_dir" ]; then
       mkdir -p "$target_dir"
     fi
 
-    # 将文件移动到目标目录，并重命名为 temp
+    # Move the file to the target directory
     mv "$file" "$target_dir/${output}"
   fi
 done

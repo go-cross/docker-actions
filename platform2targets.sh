@@ -11,19 +11,21 @@ declare -A mappings=(
     ["linux/s390x"]="linux-s390x-musl"
 )
 
-# 读取环境变量中的PLATFORMS字符串
+# Read the PLATFORMS string in the environment variable
 platforms_str=${PLATFORMS:-""}
 
-# 以逗号分割字符串，并替换每个部分
+# Split string by comma and replace each part
 IFS=',' read -ra platforms_list <<< "$platforms_str"
 replaced_platforms=()
 for platform in "${platforms_list[@]}"; do
     replaced_platforms+=("${mappings[$platform]:-$platform}")
 done
 
-# 将替换后的部分用逗号拼接起来
+# Splice the replaced parts together with commas
 replaced_str=$(IFS=,; echo "${replaced_platforms[*]}")
 
-# 将结果写入到环境变量为GITHUB_OUTPUT路径的文件中
+echo "Build targets: $replaced_str"
+
+# Write the results to the file whose environment variable is the GITHUB_OUTPUT path
 output_file=${GITHUB_OUTPUT:-"output.txt"}
 echo "targets=$replaced_str" >> "$output_file"
