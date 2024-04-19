@@ -1,7 +1,7 @@
 name: 'Docker CGO Actions'
 description: 'Build golang program with CGO_ENABLED=1 for docker Image'
 inputs:
-  platforms:  # id of input
+  platforms: # id of input
     description: 'The platforms to build for'
     required: false
     default: 'linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/riscv64,linux/s390x'
@@ -26,8 +26,13 @@ inputs:
     required: false
     default: '$repo'
 
+outputs:
+  platforms:
+    description: 'The platforms built for'
+    value: ${{ inputs.platforms }}
+
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Set GitHub Path
       run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
@@ -60,4 +65,3 @@ runs:
       env:
         OUTPUT: ${{ inputs.output }}
         REPOSITORY: ${{ github.repository }}
-
