@@ -16,8 +16,8 @@ repo=$(basename "$REPOSITORY")
 string=$OUTPUT
 output="${string//\$repo/$repo}"
 
-echo "output=$output"
-echo "output=$output" >> "$GITHUB_OUTPUT"
+echo "output filename: $output"
+echo "output=$output" >>"$GITHUB_OUTPUT"
 
 # Traverse the bin directory
 for file in temp-bin/temp*; do
@@ -25,7 +25,9 @@ for file in temp-bin/temp*; do
   filename=$(basename "$file")
 
   # Get key from filename
-  key="${filename#temp}"
+  key="${filename#temp-}"
+
+  echo "handling $file, filename: $filename ,key: $key"
 
   # if the key exists in the mappings
   if [ -n "${mappings[$key]}" ]; then
@@ -36,6 +38,7 @@ for file in temp-bin/temp*; do
       mkdir -p "$target_dir"
     fi
 
+    echo "Moving $file to $target_dir/${output}"
     # Move the file to the target directory
     mv "$file" "$target_dir/${output}"
   fi

@@ -39,9 +39,8 @@ jobs:
         with:
           dir: './example'
 
-      - name: Print Output
-        id: output
-        run: echo "${{ steps.test-action.outputs.files }}"
+      - name: Print folder tree
+        run: sudo apt install tree && tree ./bin
 
       - name: Docker meta
         id: meta

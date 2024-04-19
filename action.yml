@@ -49,8 +49,8 @@ runs:
         dir: ${{ inputs.dir }}
         packages: ${{ inputs.packages }}
         flags: ${{ inputs.flags }}
-        out-dir: temp-bin
-        output: 'temp$target'
+        out-dir: 'temp-bin'
+        output: 'temp-$target'
         targets: ${{ steps.platform2targets.outputs.targets }}
 
     - name: Rename files
