@@ -13,13 +13,17 @@ permissions:
 
 jobs:
   test-action:
-    # strategy:
-    #   matrix:
-    #     targets:
-    #       - '!(*musl*|*windows-arm64*|*android*)' # xgo
-    #       - 'linux-*-musl*' #musl
-    #       - 'windows-arm64' #win-arm64
-    #       - 'android-*' #android
+    strategy:
+      matrix:
+        platform:
+          - linux/386
+          - linux/amd64
+          - linux/arm/v6
+          - linux/arm/v7 
+          - linux/arm64
+          - linux/ppc64le
+          - linux/riscv64
+          - linux/s390x
     name: GitHub Actions Test
     runs-on: ubuntu-latest
 
@@ -38,22 +42,23 @@ jobs:
         uses: ./
         with:
           dir: './example'
+          platforms: ${{ matrix.platform }}
           x-flags: |
-            example/main.owner=$owner
-            example/main.repo=$repo
-            example/main.target=$target
-            example/main.sha=$sha
-            example/main.short_sha=$short_sha
-            example/main.pr=$pr
-            example/main.ext=$ext
-            example/main.tag=$tag
-            example/main.hostname=$hostname
-            example/main.username=$username
-            example/main.built_on=$built_on
-            example/main.built_at=$built_at
-            example/main.git_author=$git_author
-            example/main.git_commit=$git_commit
-            example/main.go_version=$go_version
+            main.owner=$owner
+            main.repo=$repo
+            main.target=$target
+            main.sha=$sha
+            main.short_sha=$short_sha
+            main.pr=$pr
+            main.ext=$ext
+            main.tag=$tag
+            examplemain.hostname=$hostname
+            main.username=$username
+            main.built_on=$built_on
+            main.built_at=$built_at
+            main.git_author=$git_author
+            main.git_commit=$git_commit
+            main.go_version=$go_version
 
       - name: Print folder tree
         run: sudo apt install tree && tree ./bin
