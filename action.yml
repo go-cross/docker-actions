@@ -25,6 +25,10 @@ inputs:
     description: 'The output binary name'
     required: false
     default: '$repo'
+  x-flags:
+    description: 'Extra X ldflags to pass to the go build command'
+    required: false
+    default: ''
 
 outputs:
   platforms:
@@ -57,6 +61,7 @@ runs:
         out-dir: 'temp-bin'
         output: 'temp-$target'
         targets: ${{ steps.platform2targets.outputs.targets }}
+        x-flags: ${{ inputs.x-flags }}
 
     - name: Rename files
       id: rename

@@ -69,13 +69,14 @@ Sure, here are the inputs and outputs in table format:
 
 ## Inputs
 
-| Input     | Description                               | Required | Default Value                                                                                         |
-| --------- | ----------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------- |
-| platforms | The platforms to build for                | No       | 'linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/riscv64,linux/s390x' |
-| dir       | The directory to work                     | No       | '.'                                                                                                   |
-| packages  | The packages to build                     | No       | '.'                                                                                                   |
-| flags     | The flags to pass to the go build command | No       | '-ldflags=-w -s'                                                                                      |
-| output    | The output binary name                    | No       | '$repo'                                                                                               |
+| Input     | Description                                     | Required | Default Value                                                                                         |
+| --------- | ----------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| platforms | The platforms to build for                      | No       | 'linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/riscv64,linux/s390x' |
+| dir       | The directory to work                           | No       | '.'                                                                                                   |
+| packages  | The packages to build                           | No       | '.'                                                                                                   |
+| flags     | The flags to pass to the go build command       | No       | '-ldflags=-w -s'                                                                                      |
+| output    | The output binary name                          | No       | '$repo'                                                                                               |
+| x-flags   | Extra X ldflags to pass to the go build command | No       |                                                                                                       |
 
 ## Outputs
 
