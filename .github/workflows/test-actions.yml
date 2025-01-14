@@ -84,4 +84,4 @@ jobs:
           push: false
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: ${{ steps.docker-build.outputs.platforms }}
+          platforms: ${{ steps.test-action.outputs.platforms }}
