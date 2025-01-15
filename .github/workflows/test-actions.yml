@@ -52,7 +52,7 @@ jobs:
             main.pr=$pr
             main.ext=$ext
             main.tag=$tag
-            examplemain.hostname=$hostname
+            main.hostname=$hostname
             main.username=$username
             main.built_on=$built_on
             main.built_at=$built_at
